@@ -118,14 +118,29 @@
       position: relative; z-index: 1;
     }
     .hero-eyebrow {
-      display: inline-block;
-      font-size: 0.75rem; font-weight: 500; letter-spacing: 3px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-align: center;
       text-transform: uppercase;
       color: var(--color-accent);
       background: rgba(200,168,75,0.15);
       border: 1px solid rgba(200,168,75,0.4);
-      padding: 6px 16px; border-radius: 999px;
+      padding: 8px 22px; border-radius: 999px;
       margin-bottom: 1.5rem;
+      max-width: 100%;
+    }
+    .hero-eyebrow .eyebrow-main {
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 3px;
+    }
+    .hero-eyebrow .eyebrow-sub {
+      font-size: 0.62rem; font-weight: 400; letter-spacing: 1.2px;
+      color: rgba(200,168,75,0.85);
+      white-space: nowrap;
+    }
+    @media (max-width: 480px) {
+      .hero-eyebrow .eyebrow-sub { white-space: normal; letter-spacing: 0.8px; }
     }
     .hero h1 {
       font-family: var(--font-display);
@@ -381,6 +396,112 @@
     .coordinator { display: flex; align-items: center; gap: 0.75rem; margin: 1rem 0 0.25rem; }
     .coordinator img { width: 54px; height: 54px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.2); }
     .coordinator small { display: block; color: rgba(255,255,255,0.5); font-size: 0.72rem; margin-top: 2px; }
+    /* ---------- Goals çeviri bayrakları ---------- */
+    .goals-flags {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-top: 1.4rem;
+      flex-wrap: wrap;
+    }
+    .goals-flags .flags-label {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      margin-right: 0.2rem;
+    }
+    .flag-btn {
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      border-radius: 6px;
+      padding: 0;
+      width: 54px;
+      height: 38px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s;
+      display: inline-flex;
+    }
+    .flag-btn svg { width: 100%; height: 100%; display: block; }
+    .flag-btn:hover,
+    .flag-btn:focus-visible {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+      border-color: var(--color-primary);
+      outline: none;
+    }
+
+    /* ---------- Çeviri modal penceresi ---------- */
+    .lang-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 26, 26, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1.2rem;
+    }
+    .lang-modal-overlay.open { display: flex; }
+    .lang-modal {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      max-width: 560px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 1.8rem 2rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      position: relative;
+      animation: langModalIn 0.35s var(--ease-out);
+      border-top: 4px solid var(--color-primary);
+    }
+    @keyframes langModalIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
+    }
+    .lang-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 1rem;
+    }
+    .lang-modal-header .lang-modal-flag {
+      width: 44px; height: 31px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      flex-shrink: 0;
+      display: inline-flex;
+    }
+    .lang-modal-header .lang-modal-flag svg { width: 100%; height: 100%; display: block; }
+    .lang-modal-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--color-primary-dk);
+      margin: 0;
+    }
+    .lang-modal-body p {
+      margin-bottom: 0.9rem;
+      line-height: 1.65;
+      color: var(--color-text);
+      font-size: 0.97rem;
+    }
+    .lang-modal-body p:last-child { margin-bottom: 0; }
+    .lang-modal-close {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.8rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--color-muted);
+      cursor: pointer;
+      padding: 0.3rem;
+      transition: color 0.2s;
+    }
+    .lang-modal-close:hover { color: var(--color-primary-dk); }
   </style>
 </head>
 <body>
@@ -412,7 +533,10 @@
        ============================================================ -->
   <section class="hero" id="home">
     <div class="hero-content">
-      <div class="hero-eyebrow">Erasmus+ Project</div>
+      <div class="hero-eyebrow">
+        <span class="eyebrow-main">Erasmus+ K220 Project</span>
+        <span class="eyebrow-sub">Project Number: 2025-1-TR01-KA220-VET-000349984</span>
+      </div>
       <h1>Innovative & Digital Approaches in <em>Olive Tree</em> Cultivation</h1>
       <p>
         Virtual Reality Precision Pruning for Olive Trees — empowering agricultural
@@ -447,6 +571,39 @@
             sustainability.
           </p>
           <!-- Buraya ek paragraf ekleyebilirsiniz -->
+
+          <!-- Çeviri bayrakları: tıklandığında metnin çevirisi modal pencerede açılır -->
+          <div class="goals-flags">
+            <span class="flags-label">Read in:</span>
+            <button class="flag-btn" data-lang="es" aria-label="Leer en español" title="Español">
+              <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect width="60" height="40" fill="#AA151B"/>
+                <rect y="10" width="60" height="20" fill="#F1BF00"/>
+              </svg>
+            </button>
+            <button class="flag-btn" data-lang="el" aria-label="Διαβάστε στα ελληνικά" title="Ελληνικά">
+              <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect width="60" height="40" fill="#0D5EAF"/>
+                <g fill="#fff">
+                  <rect y="4.44" width="60" height="4.44"/>
+                  <rect y="13.33" width="60" height="4.44"/>
+                  <rect y="22.22" width="60" height="4.44"/>
+                  <rect y="31.11" width="60" height="4.44"/>
+                </g>
+                <rect width="22.22" height="22.22" fill="#0D5EAF"/>
+                <rect x="8.89" width="4.44" height="22.22" fill="#fff"/>
+                <rect y="8.89" width="22.22" height="4.44" fill="#fff"/>
+              </svg>
+            </button>
+            <button class="flag-btn" data-lang="tr" aria-label="Türkçe oku" title="Türkçe">
+              <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect width="60" height="40" fill="#E30A17"/>
+                <circle cx="23" cy="20" r="10" fill="#fff"/>
+                <circle cx="25.5" cy="20" r="8" fill="#E30A17"/>
+                <polygon fill="#fff" points="40.7,20 37.88,21.0 37.80,23.99 35.98,21.62 33.10,22.47 34.8,20 33.10,17.53 35.98,18.38 37.80,16.01 37.88,19.0"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div class="goals-cards">
@@ -615,6 +772,81 @@
         hamburger.classList.remove('active');
         hamburger.setAttribute('aria-expanded', 'false');
       });
+    });
+  </script>
+
+  <!-- ============================================================
+       OUR GOALS — Çeviri modal penceresi
+       ============================================================ -->
+  <div class="lang-modal-overlay" id="langModalOverlay" role="dialog" aria-modal="true" aria-labelledby="langModalTitle">
+    <div class="lang-modal">
+      <button class="lang-modal-close" id="langModalClose" aria-label="Close">&times;</button>
+      <div class="lang-modal-header">
+        <span class="lang-modal-flag" id="langModalFlag"></span>
+        <h3 id="langModalTitle"></h3>
+      </div>
+      <div class="lang-modal-body" id="langModalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Our Goals çevirileri ----------
+    const goalsTranslations = {
+      es: {
+        title: 'Nuestros Objetivos',
+        paragraphs: [
+          'El proyecto tiene como objetivo modernizar la educación agrícola integrando la Realidad Virtual (RV) en la formación para la poda de precisión de olivos, centrándose en las variedades Arbequina, Arbosana, Koroneiki y variedades locales turcas.',
+          'Los objetivos incluyen mejorar las habilidades prácticas de los participantes, aumentar la alfabetización digital y promover prácticas agrícolas sostenibles.',
+          'Al proporcionar una formación accesible y de alta calidad, el proyecto empodera a los profesionales y estudiantes del sector agrícola, al tiempo que fomenta la innovación y la sostenibilidad ambiental.'
+        ]
+      },
+      el: {
+        title: 'Οι Στόχοι μας',
+        paragraphs: [
+          'Το έργο στοχεύει στον εκσυγχρονισμό της γεωργικής εκπαίδευσης ενσωματώνοντας την Εικονική Πραγματικότητα (VR) στην κατάρτιση για το κλάδεμα ακριβείας των ελαιόδεντρων, με έμφαση στις ποικιλίες Arbequina, Arbosana, Κορωνέικη και τοπικές τουρκικές ποικιλίες.',
+          'Οι στόχοι περιλαμβάνουν τη βελτίωση των πρακτικών δεξιοτήτων των συμμετεχόντων, την ενίσχυση του ψηφιακού γραμματισμού και την προώθηση βιώσιμων γεωργικών πρακτικών.',
+          'Παρέχοντας προσβάσιμη και υψηλής ποιότητας κατάρτιση, το έργο ενδυναμώνει τους επαγγελματίες και τους σπουδαστές της γεωργίας, ενισχύοντας παράλληλα την καινοτομία και την περιβαλλοντική βιωσιμότητα.'
+        ]
+      },
+      tr: {
+        title: 'Hedeflerimiz',
+        paragraphs: [
+          'Proje, Arbequina, Arbosana, Koroneiki ve yerel Türk çeşitlerine odaklanarak, zeytin ağaçlarının hassas budanmasına yönelik eğitime Sanal Gerçekliği (VR) entegre ederek tarım eğitimini modernleştirmeyi amaçlamaktadır.',
+          'Hedefler arasında katılımcıların pratik becerilerini geliştirmek, dijital okuryazarlığı artırmak ve sürdürülebilir tarım uygulamalarını teşvik etmek yer almaktadır.',
+          'Proje, erişilebilir ve yüksek kaliteli eğitim sunarak tarım profesyonellerini ve öğrencileri güçlendirirken, yenilikçiliği ve çevresel sürdürülebilirliği de desteklemektedir.'
+        ]
+      }
+    };
+
+    const langOverlay   = document.getElementById('langModalOverlay');
+    const langTitle     = document.getElementById('langModalTitle');
+    const langBody      = document.getElementById('langModalBody');
+    const langFlag      = document.getElementById('langModalFlag');
+    const langCloseBtn  = document.getElementById('langModalClose');
+
+    document.querySelectorAll('.flag-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        const t = goalsTranslations[lang];
+        if (!t) return;
+        langTitle.textContent = t.title;
+        langBody.innerHTML = t.paragraphs.map(p => `<p>${p}</p>`).join('');
+        langFlag.innerHTML = btn.querySelector('svg').outerHTML;
+        langOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLangModal() {
+      langOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    langCloseBtn.addEventListener('click', closeLangModal);
+    langOverlay.addEventListener('click', (e) => {
+      if (e.target === langOverlay) closeLangModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && langOverlay.classList.contains('open')) closeLangModal();
     });
   </script>
 
